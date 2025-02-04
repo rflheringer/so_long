@@ -6,7 +6,7 @@
 /*   By: rheringe <rheringe@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 15:21:25 by rheringe          #+#    #+#             */
-/*   Updated: 2025/01/31 18:15:09 by rheringe         ###   ########.fr       */
+/*   Updated: 2025/02/04 15:11:51 by rheringe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,23 +17,20 @@ void	verify_map(t_map *map)
 	int i;
 	int	j;
 
-	i = 0;
-	while (map->matrix[i] != NULL)
+	i = -1;
+	while (i++, map->matrix[i] != NULL)
 	{
-		j = 0;
-		while (map->matrix[i][j] != '\0' && map->matrix[i][j] != '\n')
+		j = -1;
+		while (j++, map->matrix[i][j] != '\0' && map->matrix[i][j] != '\n')
 		{
-			if (map->matrix[i][j] == 67)
+			if (map->matrix[i][j] == 'C')
 				map->coin++;
-			if (map->matrix[i][j] == 69)
+			if (map->matrix[i][j] == 'E')
 				map->exit++;
-			if (map->matrix[i][j] == 80)
+			if (map->matrix[i][j] == 'P')
 				map->player++;
-			j++;
 		}
-		i++;
 	}
-	ft_printf("%d %d %d", map->coin, map->player, map->exit);
 	if (map->exit != 1 || map->player != 1 || map->coin < 1)
 		message_error(EXIT_INVALID_MAP);
 }
@@ -49,7 +46,6 @@ void	validate_map(char *file, t_map *map)
 	if (fd < 0)
 		message_error(EXIT_INVALID_FILE);
 	i = 0;
-	map = malloc(sizeof(t_map));
 	map->matrix = NULL;
 	while (1)
 	{
@@ -59,9 +55,6 @@ void	validate_map(char *file, t_map *map)
 			break ;
 		i++;
 	}
-	// for (int g = 0; g < 5; g++)
-	// {
-	// 	ft_printf("%s", map->matrix[g]);
-	// }
+	close(fd);
 	verify_map(map);
 }

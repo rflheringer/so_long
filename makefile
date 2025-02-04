@@ -12,7 +12,8 @@ HEADERS		=	-I $(libs)/Includes
 SRCS		=	./src/so_long.c \
 				./src/handle_map.c \
 				./src/handle_erros.c \
-				./src/handle_inits.c
+				./src/handle_inits.c \
+				./src/codan.c
 
 OBJS		=	${SRCS:.c=.o}
 
