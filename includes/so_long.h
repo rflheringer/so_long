@@ -6,19 +6,24 @@
 /*   By: rheringe <rheringe@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 13:38:27 by rheringe          #+#    #+#             */
-/*   Updated: 2025/02/04 15:11:41 by rheringe         ###   ########.fr       */
+/*   Updated: 2025/02/04 18:03:37 by rheringe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SO_LONG_H
 # define SO_LONG_H
 
+
+#define TILE_SIZE 32 
+#define SCREEN_WIDTH 640 
+#define SCREEN_HEIGHT 480 
+
 # define EXIT_INVALID_FILE	-3
 # define EXIT_INVALID_MAP 	-2
 # define EXIT_INVALID_ARGS	-1
 # define EXIT_SUCCESS	0
 # define EXIT_FAILURE	1
-# define TILE_SIZE	100
+
 
 typedef struct s_map
 {
@@ -52,8 +57,9 @@ void	message_error(short error_code);
 void	validate_map(char *file, t_map *map);
 void	verify_map(t_map *map);
 
-//codan functions
-int32_t init_window(t_game *game);
+//handle render
+int32_t init_window(void);
+void fill_screen_with_terrain(void *mlx, void *img);
 
 
 #endif

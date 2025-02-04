@@ -6,7 +6,7 @@
 /*   By: rheringe <rheringe@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 13:29:28 by rheringe          #+#    #+#             */
-/*   Updated: 2025/02/04 14:48:31 by rheringe         ###   ########.fr       */
+/*   Updated: 2025/02/04 18:03:40 by rheringe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,5 +22,5 @@ int main	(int argc, char **argv)
 	game->map = malloc(sizeof(t_map));
 	init_map(game->map);
 	validate_map(argv[1], game->map);
-	init_window(game);
+	init_window();
 }
