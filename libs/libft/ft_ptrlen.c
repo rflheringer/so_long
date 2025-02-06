@@ -1,32 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   handle_inits.c                                     :+:      :+:    :+:   */
+/*   ft_ptrlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rheringe <rheringe@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/31 17:12:18 by rheringe          #+#    #+#             */
-/*   Updated: 2025/02/06 12:41:48 by rheringe         ###   ########.fr       */
+/*   Created: 2025/02/06 18:14:43 by rheringe          #+#    #+#             */
+/*   Updated: 2025/02/06 18:15:38 by rheringe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/so_long.h"
+#include "../includes/libft.h"
 
-// t_game	*init_game(t_map *map)
-// {
-// 	t_game *game;
-	
-// 	game = (t_game *)malloc(sizeof(t_game));
-// 	game->map = map;
-// 	return(game);
-// }
+int	ft_ptrlen(char **v)
+{
+	int	i;
 
-// void	init_map(t_map *map)
-// {
-// 	map->matrix = NULL;
-// 	map->width = 0;
-// 	map->height = 0;
-// 	map->coin = 0;
-// 	map->player = 0;
-// 	map->exit = 0;
-// }
+	i = 0;
+	while (v[i] != NULL)
+		i++;
+	return (i);
+}

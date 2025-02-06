@@ -50,7 +50,8 @@ SRCS		=	./libft/ft_isalpha.c \
 				./libft/ft_lstclear_bonus.c \
 				./libft/ft_lstiter_bonus.c \
 				./libft/ft_lstmap_bonus.c \
-				./libft/ft_realloc.c
+				./libft/ft_realloc.c \
+				./libft/ft_ptrlen.c
 
 HEADERS		=	./includes
 AR			=	ar rcs

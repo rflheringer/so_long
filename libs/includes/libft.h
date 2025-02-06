@@ -6,7 +6,7 @@
 /*   By: rheringe <rheringe@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 10:39:20 by rheringe          #+#    #+#             */
-/*   Updated: 2025/01/31 16:44:38 by rheringe         ###   ########.fr       */
+/*   Updated: 2025/02/06 18:15:22 by rheringe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ int		ft_strlcpy(char *dst, const char *src, size_t size);
 int		ft_isalnum(int c);
 int		ft_memcmp(const void *s1, const void *s2, size_t n);
 int		ft_lstsize(t_list *lst);
+int		ft_ptrlen(char **v);
 
 char	*ft_strchr(const char *str, int c);
 char	*ft_strnstr(const char *big, const char *little, size_t len);

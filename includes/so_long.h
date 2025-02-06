@@ -6,7 +6,7 @@
 /*   By: rheringe <rheringe@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 13:38:27 by rheringe          #+#    #+#             */
-/*   Updated: 2025/02/04 18:03:37 by rheringe         ###   ########.fr       */
+/*   Updated: 2025/02/06 18:20:18 by rheringe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define SO_LONG_H
 
 
-#define TILE_SIZE 32 
+#define TILE_SIZE 64 
 #define SCREEN_WIDTH 640 
 #define SCREEN_HEIGHT 480 
 
@@ -27,17 +27,22 @@
 
 typedef struct s_map
 {
-	char	**matrix;
-	int		width;
-	int		height;
-	int		coin;
-	int		player;
-	int		exit;
+	char		**matrix;
+	int			width;
+	int			height;
+	int			coin;
+	int			player;
+	int			exit;
+	void		*wall1_img;
+	void		*wall2_img;
+	void		*ground_img;
 }t_map;
 
 typedef struct s_game
 {
-	t_map *map;
+	void	*mlx;
+	void	*window;
+	t_map	map;
 }t_game;
 
 #include <stdio.h>
@@ -48,18 +53,18 @@ typedef struct s_game
 
 //handle_inits
 void	init_map(t_map *map);
-t_game	*init_game(t_map *map);
+t_game	*init_game();
 
 //handle_errors functions
 void	message_error(short error_code);
 
 //handle_map functions
-void	validate_map(char *file, t_map *map);
-void	verify_map(t_map *map);
+void	validate_map(char *file, t_game *game);
+void	verify_map(t_game *game);
 
 //handle render
-int32_t init_window(void);
-void fill_screen_with_terrain(void *mlx, void *img);
+int32_t init_window(t_game *game);
+void	fill_screen_with_terrain(t_game *game);
 
 
 #endif
