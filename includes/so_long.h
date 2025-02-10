@@ -6,7 +6,7 @@
 /*   By: rheringe <rheringe@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 13:38:27 by rheringe          #+#    #+#             */
-/*   Updated: 2025/02/10 18:34:36 by rheringe         ###   ########.fr       */
+/*   Updated: 2025/02/10 19:10:31 by rheringe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ typedef struct s_image
 	mlx_image_t		*wall_img;
 	mlx_texture_t	*wall_side_text;
 	mlx_image_t		*wall_side_img;	
+	mlx_texture_t	*exit_text;
+	mlx_image_t		*exit_img;
 }t_image;
 
 typedef struct s_map
