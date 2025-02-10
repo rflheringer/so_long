@@ -6,7 +6,7 @@
 /*   By: rheringe <rheringe@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 13:29:28 by rheringe          #+#    #+#             */
-/*   Updated: 2025/02/06 18:18:06 by rheringe         ###   ########.fr       */
+/*   Updated: 2025/02/10 13:12:08 by rheringe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,8 @@ int main	(int argc, char **argv)
 
 	if (argc != 2)
 		message_error(EXIT_INVALID_ARGS);
-	game = (t_game *)malloc(sizeof(t_game));
+	game = malloc(sizeof(t_game));
+	init_map(game);
 	validate_map(argv[1], game);
-	//game->map = malloc(sizeof(t_map));
-	//init_map(game->map);
-	//validate_map(argv[1], game->map);
-	init_window(game);
+	init_so_long(game);
 }

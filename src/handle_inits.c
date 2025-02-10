@@ -6,27 +6,48 @@
 /*   By: rheringe <rheringe@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 17:12:18 by rheringe          #+#    #+#             */
-/*   Updated: 2025/02/06 12:41:48 by rheringe         ###   ########.fr       */
+/*   Updated: 2025/02/10 18:40:59 by rheringe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/so_long.h"
 
-// t_game	*init_game(t_map *map)
-// {
-// 	t_game *game;
-	
-// 	game = (t_game *)malloc(sizeof(t_game));
-// 	game->map = map;
-// 	return(game);
-// }
+void	init_map(t_game *game)
+{
+	game->map.matrix = NULL;
+	game->map.width = 0;
+	game->map.height = 0;
+	game->map.coin = 0;
+	game->map.player = 0;
+	game->map.exit = 0;
+	game->map.moves = 0;
+}
 
-// void	init_map(t_map *map)
-// {
-// 	map->matrix = NULL;
-// 	map->width = 0;
-// 	map->height = 0;
-// 	map->coin = 0;
-// 	map->player = 0;
-// 	map->exit = 0;
-// }
+int32_t init_so_long(t_game *game)
+{
+    game->mlx = mlx_init(game->map.width * TILE_SIZE, game->map.height * TILE_SIZE, "so_long", true);
+    if (!game->mlx)
+		return (1);
+	init_images(game);
+	mlx_delete_texture(game->image.ground_text);
+	mlx_resize_image(game->image.ground_img, TILE_SIZE, TILE_SIZE);
+    fill_screen_with_terrain(game);
+    mlx_loop(game->mlx);
+    return (0);
+}
+
+void	init_images(t_game *game)
+{
+	game->image.ground_text = mlx_load_png("assets/sand.png");
+	game->image.ground_img = mlx_texture_to_image(game->mlx, game->image.ground_text);
+	mlx_resize_image(game->image.ground_img, TILE_SIZE, TILE_SIZE);
+	game->image.wall_text = mlx_load_png("assets/wall_grass.png");
+	game->image.wall_img = mlx_texture_to_image(game->mlx, game->image.wall_text);
+	mlx_resize_image(game->image.wall_img, TILE_SIZE, TILE_SIZE);
+	game->image.wall_side_text = mlx_load_png("assets/grass.png");
+	game->image.wall_side_img = mlx_texture_to_image(game->mlx, game->image.wall_side_text);
+	mlx_resize_image(game->image.wall_side_img, TILE_SIZE, TILE_SIZE);
+	game->player.p_text = mlx_load_png("assets/goblin.png");
+	game->player.p_img = mlx_texture_to_image(game->mlx, game->player.p_text);
+	mlx_resize_image(game->image.ground_img, TILE_SIZE, TILE_SIZE);
+}
