@@ -6,7 +6,7 @@
 /*   By: rafaelheringer <rafaelheringer@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 17:35:25 by rheringe          #+#    #+#             */
-/*   Updated: 2025/02/11 17:27:33 by rafaelherin      ###   ########.fr       */
+/*   Updated: 2025/02/11 17:47:31 by rafaelherin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void fill_screen_with_terrain(t_game *game)
 			if (game->map.matrix[i][j] == 'P')
 			{
 				mlx_image_to_window(game->mlx, game->image.ground_img, j * (TILE_SIZE), i * (TILE_SIZE));
-				mlx_image_to_window(game->mlx, game->player.idle_frames_img, j * (TILE_SIZE), i * (TILE_SIZE));
+				mlx_image_to_window(game->mlx, game->player.idle_frames_img[0], j * (TILE_SIZE), i * (TILE_SIZE));
 			}
 			if (game->map.matrix[i][j] == 'E')
 			{

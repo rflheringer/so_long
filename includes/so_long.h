@@ -6,7 +6,7 @@
 /*   By: rafaelheringer <rafaelheringer@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 13:38:27 by rheringe          #+#    #+#             */
-/*   Updated: 2025/02/11 17:22:05 by rafaelherin      ###   ########.fr       */
+/*   Updated: 2025/02/11 18:31:53 by rafaelherin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,8 @@ typedef struct s_player
 	bool			down;
 	int				current_frame;
 	int				frame_count;
-	mlx_texture_t	*idle_frames_text;
-	mlx_image_t		*idle_frames_img;
+	mlx_texture_t	*idle_frames_text[7];
+	mlx_image_t		*idle_frames_img[7];
 	mlx_texture_t	*current_frame_text;
 	mlx_image_t		*current_frame_img;
 	double			frame_time;
@@ -88,6 +88,8 @@ typedef struct s_game
 void	init_images(t_game *game);
 void	init_map(t_game *game);
 int32_t init_so_long(t_game *game);
+double	get_delta_time(void);
+void 	main_loop(void *param);
 
 //handle_errors functions
 void	message_error(short error_code);
@@ -104,6 +106,9 @@ void    key_hook(mlx_key_data_t keydata, void *param);
 void    init_idle_player(t_game *game);
 void	move_player(t_game *game, int move_x, int move_y);
 void	ft_handle_common_move(t_game *game, int move_x, int move_y);
+void    load_idle_animation_p(t_game *game);
+void	update_idle_animation(t_game *game, double delta_time);
+void	render_player(t_game *game);
 
 
 #endif

@@ -6,12 +6,40 @@
 /*   By: rafaelheringer <rafaelheringer@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 11:02:53 by rafaelherin       #+#    #+#             */
-/*   Updated: 2025/02/11 17:25:15 by rafaelherin      ###   ########.fr       */
+/*   Updated: 2025/02/11 18:28:59 by rafaelherin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/so_long.h"
 
+void    load_idle_animation_p(t_game *game)
+{
+    game->player.idle_frames_text[0] = mlx_load_png("assets/goblin.png");
+    game->player.idle_frames_img[0] = mlx_texture_to_image(game->mlx, game->player.idle_frames_text[0]);
+	mlx_resize_image(game->player.idle_frames_img[0], 42, 42);
+    game->player.idle_frames_text[1] = mlx_load_png("assets/goblin_2.png");
+    game->player.idle_frames_img[1] = mlx_texture_to_image(game->mlx, game->player.idle_frames_text[1]);
+	mlx_resize_image(game->player.idle_frames_img[1], 42, 42);
+    game->player.idle_frames_text[2] = mlx_load_png("assets/goblin_3.png");
+    game->player.idle_frames_img[2] = mlx_texture_to_image(game->mlx, game->player.idle_frames_text[2]);
+	mlx_resize_image(game->player.idle_frames_img[2], 42, 42);
+    game->player.idle_frames_text[3] = mlx_load_png("assets/goblin_4.png");
+    game->player.idle_frames_img[3] = mlx_texture_to_image(game->mlx, game->player.idle_frames_text[3]);
+	mlx_resize_image(game->player.idle_frames_img[3], 42, 42);
+    game->player.idle_frames_text[4] = mlx_load_png("assets/goblin_5.png");
+    game->player.idle_frames_img[4] = mlx_texture_to_image(game->mlx, game->player.idle_frames_text[4]);
+	mlx_resize_image(game->player.idle_frames_img[4], 42, 42);
+    game->player.idle_frames_text[5] = mlx_load_png("assets/goblin_6.png");
+    game->player.idle_frames_img[5] = mlx_texture_to_image(game->mlx, game->player.idle_frames_text[5]);
+	mlx_resize_image(game->player.idle_frames_img[5], 42, 42);
+    game->player.idle_frames_text[6] = mlx_load_png("assets/goblin_7.png");
+    game->player.idle_frames_img[6] = mlx_texture_to_image(game->mlx, game->player.idle_frames_text[6]);
+	mlx_resize_image(game->player.idle_frames_img[6], 42, 42);
+    game->player.current_frame = 0;
+    game->player.current_frame_img = game->player.idle_frames_img[game->player.current_frame];
+    game->player.frame_count = 7;
+    game->player.frame_delay = 0.1;
+}
 
 void key_hook(mlx_key_data_t keydata, void *param)
 {
@@ -31,11 +59,11 @@ void key_hook(mlx_key_data_t keydata, void *param)
     }
 }
 
-void	move_player(t_game *game, int move_x, int move_y)
+void move_player(t_game *game, int move_x, int move_y)
 {
-	ft_handle_common_move(game, move_x, move_y);
-    mlx_image_to_window(game->mlx, game->player.idle_frames_img, game->player.x * TILE_SIZE, game->player.y * TILE_SIZE);
-	ft_printf("Moves: %d\n", game->map.moves);
+    ft_handle_common_move(game, move_x, move_y);
+    render_player(game); // Renderiza o player após o movimento
+    ft_printf("Moves: %d\n", game->map.moves);
     ft_printf("Nova posição do jogador: (%d, %d)\n", game->player.x, game->player.y);
 }
 
@@ -47,4 +75,28 @@ void	ft_handle_common_move(t_game *game, int move_x, int move_y)
 	game->map.moves++;
 	game->player.x += move_x;
 	game->player.y += move_y;
+}
+
+void update_idle_animation(t_game *game, double delta_time)
+{
+    game->player.frame_time += delta_time;
+
+    // Verifica se é hora de trocar de frame
+    if (game->player.frame_time >= game->player.frame_delay)
+    {
+        game->player.current_frame = (game->player.current_frame + 1) % game->player.frame_count;
+        game->player.frame_time = 0; // Reseta o tempo acumulado
+    }
+}
+
+void render_player(t_game *game)
+{
+    // Remove a imagem antiga do player
+    if (game->player.current_frame_img)
+        mlx_delete_image(game->mlx, game->player.current_frame_img);
+
+    // Renderiza o frame atual do player
+    game->player.current_frame_img = mlx_texture_to_image(game->mlx, game->player.idle_frames_text[game->player.current_frame]);
+    mlx_resize_image(game->player.current_frame_img, 42, 42);
+    mlx_image_to_window(game->mlx, game->player.current_frame_img, game->player.x * TILE_SIZE, game->player.y * TILE_SIZE);
 }

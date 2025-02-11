@@ -6,11 +6,34 @@
 /*   By: rafaelheringer <rafaelheringer@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 17:12:18 by rheringe          #+#    #+#             */
-/*   Updated: 2025/02/11 17:22:56 by rafaelherin      ###   ########.fr       */
+/*   Updated: 2025/02/11 18:32:45 by rafaelherin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/so_long.h"
+
+void main_loop(void *param)
+{
+    t_game *game = (t_game *)param;
+    double delta_time = get_delta_time();
+
+    // Atualiza a animação de IDLE
+    update_idle_animation(game, delta_time);
+
+    // Renderiza o player
+    render_player(game);
+}
+
+
+double get_delta_time(void) 
+{
+    static double last_time = 0;
+    double current_time = mlx_get_time();
+    double delta_time = current_time - last_time;
+    last_time = current_time;
+    return delta_time;
+}
+
 
 void	init_map(t_game *game)
 {
@@ -27,41 +50,21 @@ int32_t init_so_long(t_game *game)
 {
     game->mlx = mlx_init(game->map.width * TILE_SIZE, game->map.height * TILE_SIZE, "so_long", false);
     if (!game->mlx)
-		return (1);
-	init_images(game);
-	mlx_delete_texture(game->image.ground_text);
-	mlx_resize_image(game->image.ground_img, TILE_SIZE, TILE_SIZE);
+        return (1);
+
+    init_images(game);
+    mlx_delete_texture(game->image.ground_text);
+    mlx_resize_image(game->image.ground_img, TILE_SIZE, TILE_SIZE);
     fill_screen_with_terrain(game);
-	mlx_key_hook(game->mlx, key_hook, game);
+    mlx_key_hook(game->mlx, key_hook, game);
+    mlx_loop_hook(game->mlx, main_loop, game);
     mlx_loop(game->mlx);
     return (0);
 }
 
 void	init_images(t_game *game)
 {
-	//IDLE
-	game->player.idle_frames_text = mlx_load_png("assets/goblin.png");
-    game->player.idle_frames_img = mlx_texture_to_image(game->mlx, game->player.idle_frames_text);
-	mlx_resize_image(game->player.idle_frames_img, 42, 42);
-    // game->player.idle_frames_text[1] = mlx_load_png("assets/goblin_2.png");
-    // game->player.idle_frames_img[1] = mlx_texture_to_image(game->mlx, game->player.idle_frames_text[1]);
-	// mlx_resize_image(game->player.idle_frames_img[1], 42, 42);
-    // game->player.idle_frames_text[2] = mlx_load_png("assets/goblin_3.png");
-    // game->player.idle_frames_img[2] = mlx_texture_to_image(game->mlx, game->player.idle_frames_text[2]);
-	// mlx_resize_image(game->player.idle_frames_img[2], 42, 42);
-    // game->player.idle_frames_text[3] = mlx_load_png("assets/goblin_4.png");
-    // game->player.idle_frames_img[3] = mlx_texture_to_image(game->mlx, game->player.idle_frames_text[3]);
-	// mlx_resize_image(game->player.idle_frames_img[3], 42, 42);
-    // game->player.idle_frames_text[4] = mlx_load_png("assets/goblin_5.png");
-    // game->player.idle_frames_img[4] = mlx_texture_to_image(game->mlx, game->player.idle_frames_text[4]);
-	// mlx_resize_image(game->player.idle_frames_img[4], 42, 42);
-    // game->player.idle_frames_text[5] = mlx_load_png("assets/goblin_6.png");
-    // game->player.idle_frames_img[5] = mlx_texture_to_image(game->mlx, game->player.idle_frames_text[5]);
-	// mlx_resize_image(game->player.idle_frames_img[5], 42, 42);
-    // game->player.idle_frames_text[6] = mlx_load_png("assets/goblin_7.png");
-    // game->player.idle_frames_img[6] = mlx_texture_to_image(game->mlx, game->player.idle_frames_text[6]);
-	// mlx_resize_image(game->player.idle_frames_img[6], 42, 42);
-	//IDLE
+	load_idle_animation_p(game);
 	game->image.ground_text = mlx_load_png("assets/sand.png");
 	game->image.ground_img = mlx_texture_to_image(game->mlx, game->image.ground_text);
 	mlx_resize_image(game->image.ground_img, TILE_SIZE, TILE_SIZE);
