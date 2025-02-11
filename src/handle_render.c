@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_render.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rheringe <rheringe@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: rafaelheringer <rafaelheringer@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 17:35:25 by rheringe          #+#    #+#             */
-/*   Updated: 2025/02/10 19:30:29 by rheringe         ###   ########.fr       */
+/*   Updated: 2025/02/11 17:27:33 by rafaelherin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,17 @@ void fill_screen_with_terrain(t_game *game)
 			if (game->map.matrix[i][j] == 'P')
 			{
 				mlx_image_to_window(game->mlx, game->image.ground_img, j * (TILE_SIZE), i * (TILE_SIZE));
-				mlx_image_to_window(game->mlx, game->player.p_img, j * (TILE_SIZE), i * (TILE_SIZE));
+				mlx_image_to_window(game->mlx, game->player.idle_frames_img, j * (TILE_SIZE), i * (TILE_SIZE));
 			}
 			if (game->map.matrix[i][j] == 'E')
 			{
 				mlx_image_to_window(game->mlx, game->image.ground_img, j * TILE_SIZE, i * TILE_SIZE);
 				mlx_image_to_window(game->mlx, game->image.exit_img, j * (TILE_SIZE - 3), i * (TILE_SIZE - 6));
+			}
+			if (game->map.matrix[i][j] == 'C')
+			{
+				mlx_image_to_window(game->mlx, game->image.tnt_img, j * TILE_SIZE, i * TILE_SIZE);
+				mlx_image_to_window(game->mlx, game->image.tnt_img, j * (TILE_SIZE), i * (TILE_SIZE));
 			}
 		}
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rheringe <rheringe@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: rafaelheringer <rafaelheringer@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 13:29:28 by rheringe          #+#    #+#             */
-/*   Updated: 2025/02/10 13:12:08 by rheringe         ###   ########.fr       */
+/*   Updated: 2025/02/11 17:28:56 by rafaelherin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,4 +22,6 @@ int main	(int argc, char **argv)
 	init_map(game);
 	validate_map(argv[1], game);
 	init_so_long(game);
+	game->player.up = game->player.down = game->player.left = game->player.right = false;
+    mlx_terminate(game->mlx);
 }

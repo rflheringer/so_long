@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rheringe <rheringe@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: rafaelheringer <rafaelheringer@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 13:38:27 by rheringe          #+#    #+#             */
-/*   Updated: 2025/02/10 19:10:31 by rheringe         ###   ########.fr       */
+/*   Updated: 2025/02/11 17:22:05 by rafaelherin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 #define TILE_SIZE 64 
 #define SCREEN_WIDTH 640 
 #define SCREEN_HEIGHT 480 
+#define PLAYER_SPEED 5
 
 # define EXIT_INVALID_FILE	-3
 # define EXIT_INVALID_MAP 	-2
@@ -31,8 +32,22 @@
 
 typedef struct s_player
 {
+	int				x;
+	int				y;
 	mlx_texture_t	*p_text;
 	mlx_image_t		*p_img;
+	bool			up;
+	bool			left;
+	bool			right;
+	bool			down;
+	int				current_frame;
+	int				frame_count;
+	mlx_texture_t	*idle_frames_text;
+	mlx_image_t		*idle_frames_img;
+	mlx_texture_t	*current_frame_text;
+	mlx_image_t		*current_frame_img;
+	double			frame_time;
+	double			frame_delay;
 }t_player;
 
 typedef struct s_image
@@ -45,6 +60,8 @@ typedef struct s_image
 	mlx_image_t		*wall_side_img;	
 	mlx_texture_t	*exit_text;
 	mlx_image_t		*exit_img;
+	mlx_texture_t	*tnt_t;
+	mlx_image_t		*tnt_img;
 }t_image;
 
 typedef struct s_map
@@ -79,8 +96,14 @@ void	message_error(short error_code);
 void	validate_map(char *file, t_game *game);
 void	verify_map(t_game *game);
 
-//handle render
+//handle_render functions
 void	fill_screen_with_terrain(t_game *game);
+
+//handle_player functions
+void    key_hook(mlx_key_data_t keydata, void *param);
+void    init_idle_player(t_game *game);
+void	move_player(t_game *game, int move_x, int move_y);
+void	ft_handle_common_move(t_game *game, int move_x, int move_y);
 
 
 #endif
