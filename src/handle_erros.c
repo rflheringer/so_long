@@ -6,7 +6,7 @@
 /*   By: rheringe <rheringe@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 13:42:02 by rheringe          #+#    #+#             */
-/*   Updated: 2025/02/06 16:01:30 by rheringe         ###   ########.fr       */
+/*   Updated: 2025/02/12 18:23:43 by rheringe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,4 +25,7 @@ void	message_error(short error_code)
 	exit(error_code);
 }
 
-
+void	ft_clear_window(t_game *game)
+{
+	mlx_close_window(game->mlx);
+}

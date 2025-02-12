@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_render.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rafaelheringer <rafaelheringer@student.    +#+  +:+       +#+        */
+/*   By: rheringe <rheringe@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 17:35:25 by rheringe          #+#    #+#             */
-/*   Updated: 2025/02/11 17:47:31 by rafaelherin      ###   ########.fr       */
+/*   Updated: 2025/02/12 16:15:54 by rheringe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ void fill_screen_with_terrain(t_game *game)
 			if (game->map.matrix[i][j] == 'C')
 			{
 				mlx_image_to_window(game->mlx, game->image.tnt_img, j * TILE_SIZE, i * TILE_SIZE);
-				mlx_image_to_window(game->mlx, game->image.tnt_img, j * (TILE_SIZE), i * (TILE_SIZE));
 			}
 		}
 	}

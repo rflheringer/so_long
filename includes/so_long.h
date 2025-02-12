@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rafaelheringer <rafaelheringer@student.    +#+  +:+       +#+        */
+/*   By: rheringe <rheringe@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 13:38:27 by rheringe          #+#    #+#             */
-/*   Updated: 2025/02/11 18:31:53 by rafaelherin      ###   ########.fr       */
+/*   Updated: 2025/02/12 18:56:05 by rheringe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,19 +60,23 @@ typedef struct s_image
 	mlx_image_t		*wall_side_img;	
 	mlx_texture_t	*exit_text;
 	mlx_image_t		*exit_img;
+	mlx_texture_t	*exit_opn_text;
+	mlx_image_t		*exit_opn_img;
 	mlx_texture_t	*tnt_t;
 	mlx_image_t		*tnt_img;
 }t_image;
 
 typedef struct s_map
 {
-	char		**matrix;
-	int			width;
-	int			height;
-	int			coin;
-	int			player;
-	int			exit;
-	int			moves;
+	char	**matrix;
+	int		width;
+	int		height;
+	int		coin;
+	int		player;
+	int		exit;
+	int		moves;
+	int		x_exit;
+	int		y_exit;	
 }t_map;
 
 typedef struct s_game
@@ -93,10 +97,13 @@ void 	main_loop(void *param);
 
 //handle_errors functions
 void	message_error(short error_code);
+void	ft_clear_window(t_game *game);
 
 //handle_map functions
 void	validate_map(char *file, t_game *game);
 void	verify_map(t_game *game);
+void	load_mine(t_game *game);
+void	set_exit_position(t_game *game, int i, int j);
 
 //handle_render functions
 void	fill_screen_with_terrain(t_game *game);
@@ -105,10 +112,14 @@ void	fill_screen_with_terrain(t_game *game);
 void    key_hook(mlx_key_data_t keydata, void *param);
 void    init_idle_player(t_game *game);
 void	move_player(t_game *game, int move_x, int move_y);
-void	ft_handle_common_move(t_game *game, int move_x, int move_y);
 void    load_idle_animation_p(t_game *game);
 void	update_idle_animation(t_game *game, double delta_time);
 void	render_player(t_game *game);
+void	set_player_position(t_game *game, int i, int j);
 
+//handle_moves functions
+void	ft_handle_common_move(t_game *game, int move_x, int move_y);
+void	ft_handle_final_exit(t_game *game, int move_x, int move_y);
+void	ft_handle_collectable(t_game *game, int move_x, int move_y);
 
 #endif

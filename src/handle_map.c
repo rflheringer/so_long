@@ -6,7 +6,7 @@
 /*   By: rheringe <rheringe@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 15:21:25 by rheringe          #+#    #+#             */
-/*   Updated: 2025/02/10 15:25:28 by rheringe         ###   ########.fr       */
+/*   Updated: 2025/02/12 18:54:28 by rheringe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@ void	verify_map(t_game *game)
 			if (game->map.matrix[i][j] == 'C')
 				game->map.coin++;
 			if (game->map.matrix[i][j] == 'E')
-				game->map.exit++;
+				set_exit_position(game, i, j);
 			if (game->map.matrix[i][j] == 'P')
-				game->map.player++;
+				set_player_position(game, i, j);
 		}
 	}
 	if (game->map.exit != 1 || game->map.player != 1 || game->map.coin < 1)
@@ -59,4 +59,21 @@ void	validate_map(char *file, t_game *game)
 	}
 	close(fd);
 	verify_map(game);
+}
+
+void	load_mine(t_game *game)
+{
+	game->image.exit_text = mlx_load_png("assets/mine_closed.png");
+	game->image.exit_img = mlx_texture_to_image(game->mlx, game->image.exit_text);
+	mlx_resize_image(game->image.exit_img, TILE_SIZE, TILE_SIZE);
+	game->image.exit_opn_text = mlx_load_png("assets/mine_open.png");
+	game->image.exit_opn_img = mlx_texture_to_image(game->mlx, game->image.exit_opn_text);
+	mlx_resize_image(game->image.exit_opn_img, TILE_SIZE, TILE_SIZE);
+}
+
+void	set_exit_position(t_game *game, int i, int j)
+{
+	game->map.exit++;
+	game->map.x_exit = i;
+	game->map.y_exit = j;
 }
