@@ -6,7 +6,7 @@
 /*   By: rheringe <rheringe@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 13:38:27 by rheringe          #+#    #+#             */
-/*   Updated: 2025/02/12 18:56:05 by rheringe         ###   ########.fr       */
+/*   Updated: 2025/02/12 23:40:32 by rheringe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,22 @@
 # define EXIT_SUCCESS	0
 # define EXIT_FAILURE	1
 
+typedef struct s_enemy
+{
+	mlx_texture_t	*e_curr_text;
+	mlx_image_t		*e_curr_img;
+	mlx_texture_t	*e_fr_text[6];
+	mlx_image_t		*e_fr_img[6];
+	int				e_curr_fr;
+	int				e_fr_count;
+	double			e_fr_time;
+	double			e_fr_delay;
+	int				e_x;
+	int				e_y;
+	double 			move_time;       // Tempo acumulado para movimento
+    double 			move_delay; 
+}t_enemy;
+
 typedef struct s_player
 {
 	int				x;
@@ -42,8 +58,8 @@ typedef struct s_player
 	bool			down;
 	int				current_frame;
 	int				frame_count;
-	mlx_texture_t	*idle_frames_text[7];
-	mlx_image_t		*idle_frames_img[7];
+	mlx_texture_t	*idle_frames_text[6];
+	mlx_image_t		*idle_frames_img[6];
 	mlx_texture_t	*current_frame_text;
 	mlx_image_t		*current_frame_img;
 	double			frame_time;
@@ -81,11 +97,12 @@ typedef struct s_map
 
 typedef struct s_game
 {
-	void	*mlx;
-	void	*window;
+	void		*mlx;
+	void		*window;
 	t_player	player;
 	t_map		map;
 	t_image		image;
+	t_enemy		enemy;
 }t_game;
 
 //handle_inits
@@ -121,5 +138,15 @@ void	set_player_position(t_game *game, int i, int j);
 void	ft_handle_common_move(t_game *game, int move_x, int move_y);
 void	ft_handle_final_exit(t_game *game, int move_x, int move_y);
 void	ft_handle_collectable(t_game *game, int move_x, int move_y);
+
+
+//###########################################################################################################################
+
+//handle_enemys function
+void	load_enemy_images(t_game *game);
+void	set_enemy_position(t_game *game, int i, int j);
+void	render_enemy(t_game *game);
+void	ft_handle_dead(t_game *game, int move_x, int move_y);
+void update_enemy(t_game *game, double delta_time);
 
 #endif

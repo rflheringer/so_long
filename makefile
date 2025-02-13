@@ -15,7 +15,8 @@ SRCS		=	./src/so_long.c \
 				./src/handle_inits.c \
 				./src/handle_render.c \
 				./src/handle_player.c \
-				./src/handle_moves.c
+				./src/handle_moves.c \
+				./src/handle_enemy.c
 
 OBJS		=	${SRCS:.c=.o}
 

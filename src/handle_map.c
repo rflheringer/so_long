@@ -6,7 +6,7 @@
 /*   By: rheringe <rheringe@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 15:21:25 by rheringe          #+#    #+#             */
-/*   Updated: 2025/02/12 18:54:28 by rheringe         ###   ########.fr       */
+/*   Updated: 2025/02/12 23:21:42 by rheringe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,15 @@
 
 void	verify_map(t_game *game)
 {
-	int i;
+	int	i;
 	int	j;
 
 	i = -1;
 	while (i++, game->map.matrix[i] != NULL)
 	{
 		j = -1;
-		while (j++, game->map.matrix[i][j] != '\0' && game->map.matrix[i][j] != '\n')
+		while (j++, game->map.matrix[i][j] != '\0' &&
+			game->map.matrix[i][j] != '\n')
 		{
 			if (game->map.matrix[i][j] == 'C')
 				game->map.coin++;
@@ -29,6 +30,10 @@ void	verify_map(t_game *game)
 				set_exit_position(game, i, j);
 			if (game->map.matrix[i][j] == 'P')
 				set_player_position(game, i, j);
+			//BONUS//
+			if (game->map.matrix[i][j] == 'K')
+				set_enemy_position(game, i, j);
+			//BONUS//
 		}
 	}
 	if (game->map.exit != 1 || game->map.player != 1 || game->map.coin < 1)
@@ -51,7 +56,8 @@ void	validate_map(char *file, t_game *game)
 	game->map.matrix = NULL;
 	while (1)
 	{
-		game->map.matrix = my_realloc(game->map.matrix, sizeof(char *) * (i + 1));
+		game->map.matrix = my_realloc(game->map.matrix,
+				sizeof(char *) * (i + 1));
 		game->map.matrix[i] = get_next_line(fd);
 		if (game->map.matrix[i] == NULL)
 			break ;
@@ -64,10 +70,12 @@ void	validate_map(char *file, t_game *game)
 void	load_mine(t_game *game)
 {
 	game->image.exit_text = mlx_load_png("assets/mine_closed.png");
-	game->image.exit_img = mlx_texture_to_image(game->mlx, game->image.exit_text);
+	game->image.exit_img = mlx_texture_to_image(game->mlx,
+			game->image.exit_text);
 	mlx_resize_image(game->image.exit_img, TILE_SIZE, TILE_SIZE);
 	game->image.exit_opn_text = mlx_load_png("assets/mine_open.png");
-	game->image.exit_opn_img = mlx_texture_to_image(game->mlx, game->image.exit_opn_text);
+	game->image.exit_opn_img = mlx_texture_to_image(game->mlx,
+			game->image.exit_opn_text);
 	mlx_resize_image(game->image.exit_opn_img, TILE_SIZE, TILE_SIZE);
 }
 
