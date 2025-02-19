@@ -1,7 +1,7 @@
 NAME		=	so_long
 
 CC			=	cc
-FLAGS		=	-Wall -Werror -Wextra
+FLAGS		=	-Wall -Werror -Wextra -g3
 LIBFT		=	./libs
 LIBMLX		=	./MLX42
 
@@ -16,7 +16,9 @@ SRCS		=	./src/so_long.c \
 				./src/handle_render.c \
 				./src/handle_player.c \
 				./src/handle_moves.c \
-				./src/handle_enemy.c
+				./src/handle_enemy.c \
+				./src/utils.c \
+				./src/handle_flood_fill.c
 
 OBJS		=	${SRCS:.c=.o}
 

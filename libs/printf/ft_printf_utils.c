@@ -6,7 +6,7 @@
 /*   By: rheringe <rheringe@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 10:54:59 by rheringe          #+#    #+#             */
-/*   Updated: 2025/01/31 15:50:38 by rheringe         ###   ########.fr       */
+/*   Updated: 2025/02/18 16:07:03 by rheringe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,34 +80,34 @@ char	*ft_utoa(unsigned int n)
 	return (str);
 }
 
-char	*ft_itoa(int n)
-{
-	char	*new_s;
-	int		count_index;
-	int		sign;
-	long	num;
+// char	*ft_itoa(int n)
+// {
+// 	char	*new_s;
+// 	int		count_index;
+// 	int		sign;
+// 	long	num;
 
-	num = n;
-	sign = 0;
-	if (num < 0)
-	{
-		sign = 1;
-		num = -num;
-	}
-	count_index = ft_count_n(num) + sign;
-	new_s = (char *)malloc(((count_index + 1) * sizeof(char)));
-	if (!new_s)
-		return (NULL);
-	new_s[count_index] = '\0';
-	while (count_index > 0)
-	{
-		new_s[--count_index] = (num % 10) + '0';
-		num = num / 10;
-	}
-	if (sign == 1)
-		new_s[0] = '-';
-	return (new_s);
-}
+// 	num = n;
+// 	sign = 0;
+// 	if (num < 0)
+// 	{
+// 		sign = 1;
+// 		num = -num;
+// 	}
+// 	count_index = ft_count_n(num) + sign;
+// 	new_s = (char *)malloc(((count_index + 1) * sizeof(char)));
+// 	if (!new_s)
+// 		return (NULL);
+// 	new_s[count_index] = '\0';
+// 	while (count_index > 0)
+// 	{
+// 		new_s[--count_index] = (num % 10) + '0';
+// 		num = num / 10;
+// 	}
+// 	if (sign == 1)
+// 		new_s[0] = '-';
+// 	return (new_s);
+// }
 
 int	ft_count_n(long n)
 {

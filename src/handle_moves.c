@@ -6,17 +6,57 @@
 /*   By: rheringe <rheringe@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 11:57:15 by rheringe          #+#    #+#             */
-/*   Updated: 2025/02/12 23:31:39 by rheringe         ###   ########.fr       */
+/*   Updated: 2025/02/18 17:55:16 by rheringe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/so_long.h"
 
+void	ft_handle_exit(t_game *game, int x, int y)
+{
+	if (game->map.matrix[game->player.y][game->player.x] != '0')
+		mlx_image_to_window(game->mlx, game->image.ground_img,
+			game->player.x * TILE_SIZE, game->player.y * TILE_SIZE);
+	else if (game->map.matrix[game->player.y][game->player.x] != 'E')
+		game->map.matrix[game->player.y][game->player.x] = '0';
+	else
+		mlx_image_to_window(game->mlx, game->image.exit_img,
+			game->player.x * TILE_SIZE + 17, game->player.y * TILE_SIZE + 34);
+	game->map.moves++;
+	game->player.x += x;
+	game->player.y += y;
+}
+
+void	ft_handle_final_exit(t_game *game)
+{
+	game->map.matrix[game->player.y][game->player.x] = '0';
+	mlx_image_to_window(game->mlx,
+		game->image.ground_img, game->player.x * TILE_SIZE,
+		game->player.y * TILE_SIZE);
+	game->map.moves++;
+	ft_printf("Moves: %d\n" ,game->map.moves);
+	mlx_close_window(game->mlx);
+}
+
 void	ft_handle_common_move(t_game *game, int move_x, int move_y)
 {
+	char	*nb;
+	char	*move;
+
+	if (game->map.matrix[game->player.y][game->player.x] == 'C')
+		game->map.matrix[game->player.y][game->player.x] = '0';
+	else if (game->map.matrix[game->player.y][game->player.x] == 'E')
+		mlx_image_to_window(game->mlx, game->image.exit_img,
+			game->player.x * (TILE_SIZE -3), game->player.y * (TILE_SIZE - 6));
 	game->map.moves++;
 	game->player.x += move_x;
 	game->player.y += move_y;
+	nb = ft_itoa(game->map.moves);
+	move = ft_strjoin("Moves: ", nb);
+	mlx_image_to_window(game->mlx, game->image.rm_img, game->map.width * TILE_SIZE - 200, -22);
+	mlx_put_string(game->mlx, move, game->map.width * TILE_SIZE - 133, 15);
+	free(move);
+	free(nb);
 }
 
 void	ft_handle_collectable(t_game *game, int move_x, int move_y)
@@ -35,15 +75,3 @@ void	ft_handle_collectable(t_game *game, int move_x, int move_y)
 		game->map.matrix[game->map.x_exit][game->map.y_exit] = 'N';
 	}
 }
-
-void	ft_handle_final_exit(t_game *game, int move_x, int move_y)
-{
-	game->map.moves++;
-	game->player.x += move_x;
-	game->player.y += move_y;
-	ft_putstr_fd("Moves: ", 1);
-	ft_printf("%d\n", game->map.moves);
-	ft_putstr_fd("You won\n", 1);
-	mlx_close_window(game->mlx);
-}
-

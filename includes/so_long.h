@@ -6,7 +6,7 @@
 /*   By: rheringe <rheringe@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 13:38:27 by rheringe          #+#    #+#             */
-/*   Updated: 2025/02/12 23:40:32 by rheringe         ###   ########.fr       */
+/*   Updated: 2025/02/18 18:37:12 by rheringe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,19 @@
 #define SCREEN_HEIGHT 480 
 #define PLAYER_SPEED 5
 
-# define EXIT_INVALID_FILE	-3
-# define EXIT_INVALID_MAP 	-2
-# define EXIT_INVALID_ARGS	-1
+
+# define EXIT_MAP_NOT_CLOSED -12
+# define EXIT_NO_PATH -11
+# define EXIT_LINE_SIZE -10
+# define EXIT_MISSING_C	-9
+# define EXIT_MISSING_P	-8
+# define EXIT_MISSING_E	-7
+# define EXIT_TOO_SHORT	-6
+# define EXIT_MUST_BE_RECTANGULAR	-5
+# define EXIT_INVALID_CHAR	-4
+# define EXIT_INVALID_EXTENTION	-3
+# define EXIT_INVALID_FILE	-2
 # define EXIT_SUCCESS	0
-# define EXIT_FAILURE	1
 
 typedef struct s_enemy
 {
@@ -44,6 +52,7 @@ typedef struct s_enemy
 	int				e_y;
 	double 			move_time;       // Tempo acumulado para movimento
     double 			move_delay; 
+	int				exit;
 }t_enemy;
 
 typedef struct s_player
@@ -80,6 +89,14 @@ typedef struct s_image
 	mlx_image_t		*exit_opn_img;
 	mlx_texture_t	*tnt_t;
 	mlx_image_t		*tnt_img;
+	mlx_texture_t	*go_txt;
+	mlx_image_t		*go_img;
+	mlx_texture_t	*ph_txt;
+	mlx_image_t		*ph_img;
+	mlx_texture_t	*grassl_txt;
+	mlx_image_t		*grassl_img;
+	mlx_texture_t	*rm_txt;
+	mlx_image_t		*rm_img;
 }t_image;
 
 typedef struct s_map
@@ -93,19 +110,28 @@ typedef struct s_map
 	int		moves;
 	int		x_exit;
 	int		y_exit;	
+	char	**map_copy;
 }t_map;
 
 typedef struct s_game
 {
 	void		*mlx;
 	void		*window;
+	char		*file;
 	t_player	player;
 	t_map		map;
 	t_image		image;
 	t_enemy		enemy;
+	int			game_over_flag;
+	int			enemy_flag;
 }t_game;
 
 //handle_inits
+void	init_map(t_game *game);
+int32_t	init_so_long(t_game *game);
+
+
+
 void	init_images(t_game *game);
 void	init_map(t_game *game);
 int32_t init_so_long(t_game *game);
@@ -113,31 +139,48 @@ double	get_delta_time(void);
 void 	main_loop(void *param);
 
 //handle_errors functions
-void	message_error(short error_code);
+void	message_error(short error_code, t_game *game);
 void	ft_clear_window(t_game *game);
+void	free_file(t_game *game);
+void	ft_move_enemie(t_game *game, int dx, int dy, t_enemy *enemie);
 
 //handle_map functions
 void	validate_map(char *file, t_game *game);
+void	put_map(t_game *game);
 void	verify_map(t_game *game);
+bool	check_line_size(t_game *game);
+
 void	load_mine(t_game *game);
 void	set_exit_position(t_game *game, int i, int j);
+int		is_closed(t_game *game, int i, int j);
 
 //handle_render functions
 void	fill_screen_with_terrain(t_game *game);
 
 //handle_player functions
-void    key_hook(mlx_key_data_t keydata, void *param);
-void    init_idle_player(t_game *game);
-void	move_player(t_game *game, int move_x, int move_y);
-void    load_idle_animation_p(t_game *game);
+void	ft_player(void *param);
 void	update_idle_animation(t_game *game, double delta_time);
+void	main_move(mlx_key_data_t keydata, void *param);
+void	set_hooks(mlx_key_data_t keydata, t_game *game, double delta_time);
+void	move_player(t_game *game, int move_x, int move_y);
+
+//void    init_idle_player(t_game *game);
+void    load_idle_animation_p(t_game *game);
 void	render_player(t_game *game);
 void	set_player_position(t_game *game, int i, int j);
+void	main_move(mlx_key_data_t keydata, void *param);
+double	get_delta_time_again(void);
 
 //handle_moves functions
+void	ft_handle_final_exit(t_game *game);
+
 void	ft_handle_common_move(t_game *game, int move_x, int move_y);
-void	ft_handle_final_exit(t_game *game, int move_x, int move_y);
 void	ft_handle_collectable(t_game *game, int move_x, int move_y);
+
+//handle_flood_fill
+void	copy_map(t_game *game);
+void	flood_fill(t_game *game, int x, int y);
+void	verify_flood_fill(t_game *game);
 
 
 //###########################################################################################################################
@@ -145,8 +188,15 @@ void	ft_handle_collectable(t_game *game, int move_x, int move_y);
 //handle_enemys function
 void	load_enemy_images(t_game *game);
 void	set_enemy_position(t_game *game, int i, int j);
+void	ft_move_enemie(t_game *game, int dx, int dy, t_enemy *enemy);
+void	update_enemy(t_game *game, double delta_time);
+void	ft_handle_dead(t_game *game);
+
 void	render_enemy(t_game *game);
-void	ft_handle_dead(t_game *game, int move_x, int move_y);
-void update_enemy(t_game *game, double delta_time);
+
+int	ft_abs(int n);
+void center_image_on_screen(t_game *game, mlx_image_t *img, int offset_x, int offset_y);
+void	ft_free(char **ptr_matrix, int j);
+void	free_and_close_error(t_game *game, short error_code);
 
 #endif
