@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: rheringe <rheringe@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/31 13:42:02 by rheringe          #+#    #+#             */
-/*   Updated: 2025/02/18 18:36:53 by rheringe         ###   ########.fr       */
+/*   Created: 2025/02/21 19:01:11 by rheringe          #+#    #+#             */
+/*   Updated: 2025/02/24 15:32:14 by rheringe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,15 +43,21 @@ void	message_error(short error_code, t_game *game)
 
 void	free_file(t_game *game)
 {
+	free(game->player);
+	free(game->map);
+	free(game->enemy);
 	free(game);
 	exit(1);
 }
 
 void	free_and_close_error(t_game *game, short error_code)
 {
-	ft_free(game->map.matrix, ft_ptrlen(game->map.matrix));
+	ft_free(game->map->matrix, ft_ptrlen(game->map->matrix));
 	if (error_code == EXIT_NO_PATH)
-		ft_free(game->map.map_copy, ft_ptrlen(game->map.map_copy));
+		ft_free(game->map->map_copy, ft_ptrlen(game->map->map_copy));
+	free(game->player);
+	free(game->map);
+	free(game->enemy);
 	free(game);
 	exit(2);
 }
@@ -67,4 +73,17 @@ void	ft_free(char **ptr_matrix, int j)
 		i++;
 	}
 	free(ptr_matrix);
+}
+
+int	is_closed(t_game *game, int i, int j)
+{
+	if (i == 0 || i < game->map->height - 1
+		|| j == 0 || j < game->map->width - 1)
+	{
+		if (game->map->matrix[i][j] == '0' || game->map->matrix[i][j] == 'C'
+			|| game->map->matrix[i][j] == 'E' || game->map->matrix[i][j] == 'P'
+				|| game->map->matrix[i][j] == 'I')
+			return (0);
+	}
+	return (1);
 }

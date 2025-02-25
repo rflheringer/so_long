@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: rheringe <rheringe@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/11 11:02:53 by rafaelherin       #+#    #+#             */
-/*   Updated: 2025/02/18 18:37:52 by rheringe         ###   ########.fr       */
+/*   Created: 2025/02/21 19:07:28 by rheringe          #+#    #+#             */
+/*   Updated: 2025/02/21 19:11:54 by rheringe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,21 +23,22 @@ void	ft_player(void *param)
 		return ;
 	update_idle_animation(game, delta_time);
 	render_player(game);
-	if (game->enemy.exit > 0
+	if (game->enemy->exit > 0
 		&& ft_strnstr(game->file, "mov", ft_strlen(game->file)))
 		update_enemy(game, delta_time);
-	if (game->player.x == game->enemy.e_x
-		&& game->player.y == game->enemy.e_y)
+	if (game->player->x == game->enemy->e_x
+		&& game->player->y == game->enemy->e_y)
 		ft_handle_dead(game);
 }
 
 void	update_idle_animation(t_game *game, double delta_time)
 {
-	game->player.frame_time += delta_time;
-	if (game->player.frame_time >= game->player.frame_delay)
+	game->player->frame_time += delta_time;
+	if (game->player->frame_time >= game->player->frame_delay)
 	{
-		game->player.current_frame = (game->player.current_frame + 1) % game->player.frame_count;
-		game->player.frame_time = 0;
+		game->player->current_frame = (game->player->current_frame + 1)
+			% game->player->frame_count;
+		game->player->frame_time = 0;
 	}
 }
 
@@ -57,10 +58,10 @@ void	set_hooks(mlx_key_data_t keydata, t_game *game, double delta_time)
 {
 	if (keydata.action == MLX_PRESS || keydata.action == MLX_REPEAT)
 	{
-		game->player.current_frame = 0;
-		game->player.frame_time += delta_time;
-		game->player.frame_delay = 0.1;
-		if ((game->player.frame_time >= game->player.frame_delay
+		game->player->current_frame = 0;
+		game->player->frame_time += delta_time;
+		game->player->frame_delay = 0.1;
+		if ((game->player->frame_time >= game->player->frame_delay
 				&& keydata.action == MLX_REPEAT) || keydata.action == MLX_PRESS)
 		{
 			if (keydata.key == MLX_KEY_ESCAPE)
@@ -79,11 +80,14 @@ void	set_hooks(mlx_key_data_t keydata, t_game *game, double delta_time)
 
 void	move_player(t_game *game, int move_x, int move_y)
 {
-	if (game->map.matrix[game->player.y + move_y][game->player.x + move_x] == '1')
+	if (game->map->matrix[game->player->y + move_y]
+		[game->player->x + move_x] == '1')
 		return ;
-	if (game->map.matrix[game->player.y + move_y][game->player.x + move_x] == 'C')
+	if (game->map->matrix[game->player->y + move_y]
+		[game->player->x + move_x] == 'C')
 		ft_handle_collectable(game, move_x, move_y);
-	if (game->map.matrix[game->player.y + move_y][game->player.x + move_x] == 'N')
+	if (game->map->matrix[game->player->y + move_y]
+		[game->player->x + move_x] == 'N')
 	{
 		ft_handle_final_exit(game);
 		return ;

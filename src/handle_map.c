@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: rheringe <rheringe@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/31 15:21:25 by rheringe          #+#    #+#             */
-/*   Updated: 2025/02/18 18:15:23 by rheringe         ###   ########.fr       */
+/*   Created: 2025/02/21 19:07:18 by rheringe          #+#    #+#             */
+/*   Updated: 2025/02/24 15:30:00 by rheringe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	validate_map(char *file, t_game *game)
 		lines = temp;
 	}
 	close(fd);
-	game->map.matrix = ft_split(lines, '\n');
+	game->map->matrix = ft_split(lines, '\n');
 	free(lines);
 	put_map(game);
 }
@@ -47,23 +47,23 @@ void	put_map(t_game *game)
 	int	j;
 
 	i = -1;
-	while (i++, game->map.matrix[i] != NULL)
+	while (i++, game->map->matrix[i] != NULL)
 	{
 		j = -1;
-		while (j++, game->map.matrix[i][j] != '\0' &&
-			game->map.matrix[i][j] != '\n')
+		while (j++, game->map->matrix[i][j] != '\0' &&
+			game->map->matrix[i][j] != '\n')
 		{
 			if (!is_closed(game, i, j))
 				message_error(EXIT_MAP_NOT_CLOSED, game);
-			if (game->map.matrix[i][j] == 'C')
-				game->map.coin++;
-			if (game->map.matrix[i][j] == 'E')
+			if (game->map->matrix[i][j] == 'C')
+				game->map->coin++;
+			if (game->map->matrix[i][j] == 'E')
 				set_exit_position(game, i, j);
-			if (game->map.matrix[i][j] == 'P')
+			if (game->map->matrix[i][j] == 'P')
 				set_player_position(game, i, j);
-			if (game->map.matrix[i][j] == 'K')
+			if (game->map->matrix[i][j] == 'K')
 				set_enemy_position(game, i, j);
-			if (!ft_strchr("01CEPK", game->map.matrix[i][j]))
+			if (!ft_strchr("01CEPK", game->map->matrix[i][j]))
 				message_error(EXIT_INVALID_CHAR, game);
 		}
 	}
@@ -72,21 +72,21 @@ void	put_map(t_game *game)
 
 void	verify_map(t_game *game)
 {
-	game->map.height = ft_ptrlen(game->map.matrix);
-	game->map.width = ft_strlen(game->map.matrix[0]);
+	game->map->height = ft_ptrlen(game->map->matrix);
+	game->map->width = ft_strlen(game->map->matrix[0]);
 	if (!check_line_size(game))
 		message_error(EXIT_LINE_SIZE, game);
-	if (game->map.height == game->map.width)
+	if (game->map->height == game->map->width)
 		message_error(EXIT_MUST_BE_RECTANGULAR, game);
-	if (game->map.height < 3 || game->map.width < 3)
+	if (game->map->height < 3 || game->map->width < 3)
 		message_error(EXIT_TOO_SHORT, game);
-	if ((game->map.height * game->map.width) < 15)
+	if ((game->map->height * game->map->width) < 15)
 		message_error(EXIT_TOO_SHORT, game);
-	if (game->map.exit != 1)
+	if (game->map->exit != 1)
 		message_error(EXIT_MISSING_E, game);
-	if (game->map.player != 1)
+	if (game->map->player != 1)
 		message_error(EXIT_MISSING_P, game);
-	if (game->map.coin < 1)
+	if (game->map->coin < 1)
 		message_error(EXIT_MISSING_C, game);
 	copy_map(game);
 }
@@ -97,12 +97,12 @@ bool	check_line_size(t_game *game)
 	int	j;
 
 	i = 0;
-	while (game->map.matrix[i] != NULL)
+	while (game->map->matrix[i] != NULL)
 	{
 		j = 0;
-		while (game->map.matrix[i][j] != '\0')
+		while (game->map->matrix[i][j] != '\0')
 			j++;
-		if (j != game->map.width)
+		if (j != game->map->width)
 			return (false);
 		i++;
 	}
@@ -111,32 +111,12 @@ bool	check_line_size(t_game *game)
 
 void	load_mine(t_game *game)
 {
-	game->image.exit_text = mlx_load_png("assets/mine_closed.png");
-	game->image.exit_img = mlx_texture_to_image(game->mlx,
-			game->image.exit_text);
-	mlx_resize_image(game->image.exit_img, TILE_SIZE, TILE_SIZE);
-	game->image.exit_opn_text = mlx_load_png("assets/mine_open.png");
-	game->image.exit_opn_img = mlx_texture_to_image(game->mlx,
-			game->image.exit_opn_text);
-	mlx_resize_image(game->image.exit_opn_img, TILE_SIZE, TILE_SIZE);
-}
-
-void	set_exit_position(t_game *game, int i, int j)
-{
-	game->map.exit++;
-	game->map.x_exit = i;
-	game->map.y_exit = j;
-}
-
-int	is_closed(t_game *game, int i, int j)
-{
-	if (i == 0 || i < game->map.height - 1
-		|| j == 0 || j < game->map.width - 1)
-	{
-		if (game->map.matrix[i][j] == '0' || game->map.matrix[i][j] == 'C'
-			|| game->map.matrix[i][j] == 'E' || game->map.matrix[i][j] == 'P'
-				|| game->map.matrix[i][j] == 'I')
-			return (0);
-	}
-	return (1);
+	game->image->exit_text = mlx_load_png("assets/mine_closed.png");
+	game->image->exit_img = mlx_texture_to_image(game->mlx,
+			game->image->exit_text);
+	mlx_resize_image(game->image->exit_img, TILE_SIZE, TILE_SIZE);
+	game->image->exit_opn_text = mlx_load_png("assets/mine_open.png");
+	game->image->exit_opn_img = mlx_texture_to_image(game->mlx,
+			game->image->exit_opn_text);
+	mlx_resize_image(game->image->exit_opn_img, TILE_SIZE, TILE_SIZE);
 }

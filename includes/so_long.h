@@ -6,7 +6,7 @@
 /*   By: rheringe <rheringe@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 13:38:27 by rheringe          #+#    #+#             */
-/*   Updated: 2025/02/18 18:37:12 by rheringe         ###   ########.fr       */
+/*   Updated: 2025/02/24 17:08:38 by rheringe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@
 
 typedef struct s_enemy
 {
-	mlx_texture_t	*e_curr_text;
 	mlx_image_t		*e_curr_img;
 	mlx_texture_t	*e_fr_text[6];
 	mlx_image_t		*e_fr_img[6];
@@ -50,7 +49,7 @@ typedef struct s_enemy
 	double			e_fr_delay;
 	int				e_x;
 	int				e_y;
-	double 			move_time;       // Tempo acumulado para movimento
+	double 			move_time;
     double 			move_delay; 
 	int				exit;
 }t_enemy;
@@ -59,8 +58,6 @@ typedef struct s_player
 {
 	int				x;
 	int				y;
-	mlx_texture_t	*p_text;
-	mlx_image_t		*p_img;
 	bool			up;
 	bool			left;
 	bool			right;
@@ -69,7 +66,6 @@ typedef struct s_player
 	int				frame_count;
 	mlx_texture_t	*idle_frames_text[6];
 	mlx_image_t		*idle_frames_img[6];
-	mlx_texture_t	*current_frame_text;
 	mlx_image_t		*current_frame_img;
 	double			frame_time;
 	double			frame_delay;
@@ -87,7 +83,7 @@ typedef struct s_image
 	mlx_image_t		*exit_img;
 	mlx_texture_t	*exit_opn_text;
 	mlx_image_t		*exit_opn_img;
-	mlx_texture_t	*tnt_t;
+	mlx_texture_t	*tnt_txt;
 	mlx_image_t		*tnt_img;
 	mlx_texture_t	*go_txt;
 	mlx_image_t		*go_img;
@@ -118,10 +114,10 @@ typedef struct s_game
 	void		*mlx;
 	void		*window;
 	char		*file;
-	t_player	player;
-	t_map		map;
-	t_image		image;
-	t_enemy		enemy;
+	t_player	*player;
+	t_map		*map;
+	t_image		*image;
+	t_enemy		*enemy;
 	int			game_over_flag;
 	int			enemy_flag;
 }t_game;
@@ -156,6 +152,9 @@ int		is_closed(t_game *game, int i, int j);
 
 //handle_render functions
 void	fill_screen_with_terrain(t_game *game);
+void 	put_wall(t_game *game, int i, int j);
+void	put_ply(t_game *game, int i, int j);
+void	put_ground(t_game *game, int i, int j);
 
 //handle_player functions
 void	ft_player(void *param);
@@ -198,5 +197,11 @@ int	ft_abs(int n);
 void center_image_on_screen(t_game *game, mlx_image_t *img, int offset_x, int offset_y);
 void	ft_free(char **ptr_matrix, int j);
 void	free_and_close_error(t_game *game, short error_code);
+void	delete_images_texture(t_game *game);
+void	free_and_close(t_game *game);
+void	free_animate_images(t_game *game);
+
+void	init_images_again(t_game *game);
+void	handle_exit_e(t_game *game);
 
 #endif
