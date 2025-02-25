@@ -6,7 +6,7 @@
 /*   By: rheringe <rheringe@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 10:39:20 by rheringe          #+#    #+#             */
-/*   Updated: 2025/02/06 18:15:22 by rheringe         ###   ########.fr       */
+/*   Updated: 2025/02/25 16:53:01 by rheringe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@
 # include <string.h>
 # include <stdlib.h>
 # include <unistd.h>
-#include <fcntl.h>
+# include <fcntl.h>
 
-#include "get_next_line_bonus.h"
-#include "ft_printf.h"
+# include "get_next_line_bonus.h"
+# include "ft_printf.h"
 
 typedef struct s_list
 {

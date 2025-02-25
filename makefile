@@ -1,4 +1,5 @@
 NAME		=	so_long
+NAME_BONUS	=	so_long_bonus
 
 CC			=	cc
 FLAGS		=	-Wall -Werror -Wextra -g3
@@ -8,6 +9,7 @@ LIBMLX		=	./MLX42
 LIBS		=	$(LIBMLX)/build/libmlx42.a -ldl -lglfw -pthread -lm $(LIBFT)/libft.a
 
 HEADERS		=	-I $(libs)/Includes
+HEADER_BONUS=	-I $(libs)/Includes -I $(LIBMLX)/build
 
 SRCS		=	./src/so_long.c \
 				./src/handle_map.c \
@@ -16,12 +18,24 @@ SRCS		=	./src/so_long.c \
 				./src/handle_render.c \
 				./src/handle_player.c \
 				./src/handle_moves.c \
-				./src/handle_enemy.c \
 				./src/utils.c \
 				./src/handle_flood_fill.c \
 				./src/handle_clear.c
 
-OBJS		=	${SRCS:.c=.o}
+SRCS_BONUS		=	./bonus/so_long_bonus.c \
+				./bonus/handle_map_bonus.c \
+				./bonus/handle_erros_bonus.c \
+				./bonus/handle_inits_bonus.c \
+				./bonus/handle_render_bonus.c \
+				./bonus/handle_player_bonus.c \
+				./bonus/handle_moves_bonus.c \
+				./bonus/handle_enemy_bonus.c \
+				./bonus/utils_bonus.c \
+				./bonus/handle_flood_fill_bonus.c \
+				./bonus/handle_clear_bonus.c
+
+OBJS			=	${SRCS:.c=.o}
+OBJS_BONUS		=	${SRCS_BONUS:.c=.o}
 
 all: libmlx libft ${NAME}
 
@@ -37,13 +51,14 @@ ${NAME}: ${OBJS}
 %.o:%.c
 	${CC} ${FLAGS} -o $@ -c $< ${HEADERS}
 
-bonus: libft ${NAME_BONUS}
+bonus: libmlx libft ${NAME_BONUS}
 
 ${NAME_BONUS}: ${OBJS_BONUS}
-	$(CC) $(OBJS_BONUS) $(LIB) $(HEADERS) -o $(NAME_BONUS)
+	$(CC) $(OBJS_BONUS) $(LIBS) $(HEADERS_BONUS) -o $(NAME_BONUS)
 
 clean:
 	@rm -rf ${OBJS}
+	@rm -rf ${OBJS_BONUS}
 	@rm -rf $(LIBMLX)/build
 	@$(MAKE) -C $(LIBFT) clean
 

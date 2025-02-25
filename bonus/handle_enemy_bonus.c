@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   handle_enemy.c                                     :+:      :+:    :+:   */
+/*   handle_enemy_bonus.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rheringe <rheringe@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 19:06:36 by rheringe          #+#    #+#             */
-/*   Updated: 2025/02/25 12:37:28 by rheringe         ###   ########.fr       */
+/*   Updated: 2025/02/25 15:43:55 by rheringe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/so_long.h"
+#include "../includes/so_long_bonus.h"
 
 void	load_enemy_images(t_game *game)
 {

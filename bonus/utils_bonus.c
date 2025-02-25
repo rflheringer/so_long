@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   utils_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rheringe <rheringe@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 19:07:53 by rheringe          #+#    #+#             */
-/*   Updated: 2025/02/25 15:24:29 by rheringe         ###   ########.fr       */
+/*   Updated: 2025/02/25 16:53:26 by rheringe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/so_long.h"
+#include "../includes/so_long_bonus.h"
 
 void	load_idle_animation_p(t_game *game)
 {
@@ -55,6 +55,17 @@ void	render_player(t_game *game)
 	mlx_resize_image(game->player->current_frame_img, 64, 64);
 	mlx_image_to_window(game->mlx, game->player->current_frame_img,
 		game->player->x * TILE_SIZE, game->player->y * TILE_SIZE);
+	if (game->enemy->enemy == 1)
+	{
+		if (game->enemy->e_curr_img)
+			mlx_image_to_window(game->mlx, game->image->ground_img,
+				game->enemy->e_x * TILE_SIZE, game->enemy->e_y * TILE_SIZE);
+		game->enemy->e_curr_img = mlx_texture_to_image(game->mlx,
+				game->enemy->e_fr_text[game->player->current_frame]);
+		mlx_resize_image(game->enemy->e_curr_img, 64, 64);
+		mlx_image_to_window(game->mlx, game->enemy->e_curr_img,
+			game->enemy->e_x * TILE_SIZE, game->enemy->e_y * TILE_SIZE);
+	}
 }
 
 double	get_delta_time_again(void)
@@ -67,4 +78,11 @@ double	get_delta_time_again(void)
 	delta_time = current_time - last_time;
 	last_time = current_time;
 	return (delta_time);
+}
+
+int	ft_abs(int n)
+{
+	if (n < 0)
+		return (-n);
+	return (n);
 }

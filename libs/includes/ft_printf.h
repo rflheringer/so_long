@@ -6,7 +6,7 @@
 /*   By: rheringe <rheringe@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 10:39:20 by rheringe          #+#    #+#             */
-/*   Updated: 2025/01/31 15:57:27 by rheringe         ###   ########.fr       */
+/*   Updated: 2025/02/25 16:50:26 by rheringe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include <stdarg.h>
 # include <stdlib.h>
 
-#include "libft.h"
+# include "libft.h"
 
 typedef struct flags {
 	unsigned int	u;

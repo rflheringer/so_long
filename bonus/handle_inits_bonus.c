@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   handle_inits.c                                     :+:      :+:    :+:   */
+/*   handle_inits_bonus.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rheringe <rheringe@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 19:07:07 by rheringe          #+#    #+#             */
-/*   Updated: 2025/02/25 15:21:04 by rheringe         ###   ########.fr       */
+/*   Updated: 2025/02/25 15:44:06 by rheringe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/so_long.h"
+#include "../includes/so_long_bonus.h"
 
 void	init_map(t_game *game)
 {
@@ -44,6 +44,7 @@ void	init_images(t_game *game)
 {
 	load_idle_animation_p(game);
 	load_mine(game);
+	load_enemy_images(game);
 	game->image->grassl_txt = mlx_load_png("assets/grass_left.png");
 	game->image->grassl_img = mlx_texture_to_image(game->mlx,
 			game->image->grassl_txt);
@@ -81,6 +82,14 @@ double	get_delta_time(void)
 
 void	init_images_again(t_game *game)
 {
+	game->image->go_txt = mlx_load_png("assets/ribbon.png");
+	game->image->go_img = mlx_texture_to_image(game->mlx, game->image->go_txt);
+	mlx_resize_image(game->image->go_img, (game->map->width * TILE_SIZE / 2),
+		(game->map->height * TILE_SIZE / 2));
+	game->image->ph_txt = mlx_load_png("assets/you_died.png");
+	game->image->ph_img = mlx_texture_to_image(game->mlx, game->image->ph_txt);
+	mlx_resize_image(game->image->ph_img, ((game->map->width * TILE_SIZE / 8.5))
+		* 2, (game->map->height * TILE_SIZE / 2));
 	game->image->rm_txt = mlx_load_png("assets/move_ribbon.png");
 	game->image->rm_img = mlx_texture_to_image(game->mlx, game->image->rm_txt);
 	mlx_resize_image(game->image->rm_img, 200, 100);

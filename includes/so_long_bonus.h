@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   so_long.h                                          :+:      :+:    :+:   */
+/*   so_long_bonus.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rheringe <rheringe@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 13:38:27 by rheringe          #+#    #+#             */
-/*   Updated: 2025/02/25 15:33:26 by rheringe         ###   ########.fr       */
+/*   Updated: 2025/02/25 15:30:05 by rheringe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SO_LONG_H
-# define SO_LONG_H
+#ifndef SO_LONG_BONUS_H
+# define SO_LONG_BONUS_H
 
 # include <stdio.h>
 # include <stdlib.h>
@@ -36,6 +36,23 @@
 # define EXIT_INVALID_EXTENTION	-3
 # define EXIT_INVALID_FILE	-2
 # define EXIT_SUCCESS	0
+
+typedef struct s_enemy
+{
+	mlx_image_t		*e_curr_img;
+	mlx_texture_t	*e_fr_text[6];
+	mlx_image_t		*e_fr_img[6];
+	int				e_curr_fr;
+	int				enemy;
+	int				e_fr_count;
+	double			e_fr_time;
+	double			e_fr_delay;
+	int				e_x;
+	int				e_y;
+	double			move_time;
+	double			move_delay;
+	int				exit;
+}t_enemy;
 
 typedef struct s_player
 {
@@ -68,6 +85,10 @@ typedef struct s_image
 	mlx_image_t		*exit_opn_img;
 	mlx_texture_t	*tnt_txt;
 	mlx_image_t		*tnt_img;
+	mlx_texture_t	*go_txt;
+	mlx_image_t		*go_img;
+	mlx_texture_t	*ph_txt;
+	mlx_image_t		*ph_img;
 	mlx_texture_t	*grassl_txt;
 	mlx_image_t		*grassl_img;
 	mlx_texture_t	*rm_txt;
@@ -92,9 +113,13 @@ typedef struct s_game
 {
 	void		*mlx;
 	void		*window;
+	char		*file;
 	t_player	*player;
 	t_map		*map;
 	t_image		*image;
+	t_enemy		*enemy;
+	int			game_over_flag;
+	int			enemy_flag;
 }t_game;
 
 //handle_clear functions
@@ -104,6 +129,13 @@ void	free_and_close(t_game *game);
 void	delete_images_texture(t_game *game);
 void	center_image_on_screen(t_game *game, mlx_image_t *img,
 			int offset_x, int offset_y);
+
+//handle_enemys function
+void	load_enemy_images(t_game *game);
+void	ft_handle_dead(t_game *game);
+void	set_enemy_position(t_game *game, int i, int j);
+void	ft_move_enemie(t_game *game, int dx, int dy, t_enemy *enemy);
+void	update_enemy(t_game *game, double delta_time);
 
 //handle_errors functions
 void	message_error(short error_code, t_game *game);
@@ -136,6 +168,7 @@ void	ft_handle_exit(t_game *game, int x, int y);
 void	ft_handle_final_exit(t_game *game);
 void	ft_handle_common_move(t_game *game, int move_x, int move_y);
 void	ft_handle_collectable(t_game *game, int move_x, int move_y);
+void	handle_exit_e(t_game *game);
 
 //handle_player functions
 void	ft_player(void *param);
@@ -156,5 +189,15 @@ void	load_idle_animation_p(t_game *game);
 void	set_player_position(t_game *game, int i, int j);
 void	render_player(t_game *game);
 double	get_delta_time_again(void);
+int		ft_abs(int n);
+
+// void	init_map(t_game *game);
+// int32_t	init_so_long(t_game *game);
+// void	main_loop(void *param);
+// void	ft_clear_window(t_game *game);
+// void	ft_move_enemie(t_game *game, int dx, int dy, t_enemy *enemie);
+// void	main_move(mlx_key_data_t keydata, void *param);
+// void	render_enemy(t_game *game);
+// void	init_images_again(t_game *game);
 
 #endif

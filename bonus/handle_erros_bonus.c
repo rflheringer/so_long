@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   handle_erros.c                                     :+:      :+:    :+:   */
+/*   handle_erros_bonus.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rheringe <rheringe@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 19:01:11 by rheringe          #+#    #+#             */
-/*   Updated: 2025/02/25 15:31:53 by rheringe         ###   ########.fr       */
+/*   Updated: 2025/02/25 15:43:59 by rheringe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/so_long.h"
+#include "../includes/so_long_bonus.h"
 
 void	message_error(short error_code, t_game *game)
 {
@@ -45,6 +45,7 @@ void	free_file(t_game *game)
 {
 	free(game->player);
 	free(game->map);
+	free(game->enemy);
 	free(game);
 	exit(1);
 }
@@ -56,6 +57,7 @@ void	free_and_close_error(t_game *game, short error_code)
 		ft_free(game->map->map_copy, ft_ptrlen(game->map->map_copy));
 	free(game->player);
 	free(game->map);
+	free(game->enemy);
 	free(game);
 	exit(2);
 }

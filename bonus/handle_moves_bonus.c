@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   handle_moves.c                                     :+:      :+:    :+:   */
+/*   handle_moves_bonus.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rheringe <rheringe@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 19:04:37 by rheringe          #+#    #+#             */
-/*   Updated: 2025/02/25 16:39:39 by rheringe         ###   ########.fr       */
+/*   Updated: 2025/02/25 16:48:13 by rheringe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/so_long.h"
+#include "../includes/so_long_bonus.h"
 
 void	ft_handle_exit(t_game *game, int x, int y)
 {
@@ -77,4 +77,18 @@ void	ft_handle_collectable(t_game *game, int move_x, int move_y)
 			game->map->y_exit * TILE_SIZE, game->map->x_exit * TILE_SIZE);
 		game->map->matrix[game->map->x_exit][game->map->y_exit] = 'N';
 	}
+}
+
+void	handle_exit_e(t_game *game)
+{
+	if (game->map->coin == 0)
+	{
+		mlx_image_to_window(game->mlx, game->image->exit_opn_img,
+			game->map->y_exit * TILE_SIZE,
+			game->map->x_exit * TILE_SIZE);
+	}
+	else
+		mlx_image_to_window(game->mlx, game->image->exit_img,
+			game->enemy->e_x * (TILE_SIZE),
+			game->enemy->e_y * (TILE_SIZE));
 }

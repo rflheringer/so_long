@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   handle_flood_fill.c                                :+:      :+:    :+:   */
+/*   handle_flood_fill_bonus.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rheringe <rheringe@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 19:06:20 by rheringe          #+#    #+#             */
-/*   Updated: 2025/02/25 15:14:11 by rheringe         ###   ########.fr       */
+/*   Updated: 2025/02/25 15:44:02 by rheringe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/so_long.h"
+#include "../includes/so_long_bonus.h"
 
 void	copy_map(t_game *game)
 {

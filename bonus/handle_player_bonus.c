@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   handle_player.c                                    :+:      :+:    :+:   */
+/*   handle_player_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rheringe <rheringe@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 19:07:28 by rheringe          #+#    #+#             */
-/*   Updated: 2025/02/25 15:32:28 by rheringe         ###   ########.fr       */
+/*   Updated: 2025/02/25 15:44:16 by rheringe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/so_long.h"
+#include "../includes/so_long_bonus.h"
 
 void	ft_player(void *param)
 {
@@ -19,8 +19,16 @@ void	ft_player(void *param)
 
 	delta_time = get_delta_time();
 	game = param;
+	if (game->game_over_flag == 1)
+		return ;
 	update_idle_animation(game, delta_time);
 	render_player(game);
+	if (game->enemy->exit > 0
+		&& ft_strnstr(game->file, "mov", ft_strlen(game->file)))
+		update_enemy(game, delta_time);
+	if (game->player->x == game->enemy->e_x
+		&& game->player->y == game->enemy->e_y)
+		ft_handle_dead(game);
 }
 
 void	update_idle_animation(t_game *game, double delta_time)
@@ -41,6 +49,8 @@ void	main_move(mlx_key_data_t keydata, void *param)
 
 	game = param;
 	delta_time = get_delta_time_again();
+	if (game->game_over_flag == 1)
+		return ;
 	set_hooks(keydata, game, delta_time);
 }
 

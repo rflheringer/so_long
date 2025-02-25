@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   handle_map.c                                       :+:      :+:    :+:   */
+/*   handle_map_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rheringe <rheringe@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 19:07:18 by rheringe          #+#    #+#             */
-/*   Updated: 2025/02/25 15:21:27 by rheringe         ###   ########.fr       */
+/*   Updated: 2025/02/25 15:48:23 by rheringe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/so_long.h"
+#include "../includes/so_long_bonus.h"
 
 void	validate_map(char *file, t_game *game)
 {
@@ -61,7 +61,9 @@ void	put_map(t_game *game)
 				set_exit_position(game, i, j);
 			if (game->map->matrix[i][j] == 'P')
 				set_player_position(game, i, j);
-			if (!ft_strchr("01CEP", game->map->matrix[i][j]))
+			if (game->map->matrix[i][j] == 'K')
+				set_enemy_position(game, i, j);
+			if (!ft_strchr("01CEPK", game->map->matrix[i][j]))
 				message_error(EXIT_INVALID_CHAR, game);
 		}
 	}
