@@ -6,7 +6,7 @@
 /*   By: rheringe <rheringe@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 19:06:36 by rheringe          #+#    #+#             */
-/*   Updated: 2025/02/25 11:43:53 by rheringe         ###   ########.fr       */
+/*   Updated: 2025/02/25 12:37:28 by rheringe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ void	ft_handle_dead(t_game *game)
 void	set_enemy_position(t_game *game, int i, int j)
 {
 	game->enemy->exit = 1;
+	game->enemy->enemy = 1;
 	game->enemy->e_y = i;
 	game->enemy->e_x = j;
 	game->game_over_flag = 0;
@@ -67,7 +68,8 @@ void	ft_move_enemie(t_game *game, int dx, int dy, t_enemy *enemy)
 		mlx_image_to_window(game->mlx, game->image->tnt_img,
 			game->enemy->e_x * (TILE_SIZE), game->enemy->e_y * (TILE_SIZE));
 	}
-	if (game->map->matrix[enemy->e_y][enemy->e_x] == 'E')
+	if (game->map->matrix[enemy->e_y][enemy->e_x] == 'E' ||
+		game->map->matrix[enemy->e_y][enemy->e_x] == 'N')
 		handle_exit_e(game);
 	if ((game->map->matrix[enemy->e_y][enemy->e_x + 1] != '1'
 		|| game->map->matrix[enemy->e_y][enemy->e_x - 1] != '1') &&

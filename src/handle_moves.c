@@ -6,7 +6,7 @@
 /*   By: rheringe <rheringe@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 19:04:37 by rheringe          #+#    #+#             */
-/*   Updated: 2025/02/24 16:31:12 by rheringe         ###   ########.fr       */
+/*   Updated: 2025/02/25 12:32:41 by rheringe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,14 @@ void	ft_handle_collectable(t_game *game, int move_x, int move_y)
 
 void	handle_exit_e(t_game *game)
 {
-	mlx_image_to_window(game->mlx, game->image->exit_img,
-		game->enemy->e_x * (TILE_SIZE - 3),
-		game->enemy->e_y * (TILE_SIZE - 6));
+	if (game->map->coin == 0)
+	{
+		mlx_image_to_window(game->mlx, game->image->exit_opn_img,
+			game->map->y_exit * TILE_SIZE, 
+			game->map->x_exit * TILE_SIZE);
+	}
+	else
+		mlx_image_to_window(game->mlx, game->image->exit_img,
+			game->enemy->e_x * (TILE_SIZE),
+			game->enemy->e_y * (TILE_SIZE));
 }

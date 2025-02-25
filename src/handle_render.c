@@ -6,7 +6,7 @@
 /*   By: rheringe <rheringe@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 19:07:37 by rheringe          #+#    #+#             */
-/*   Updated: 2025/02/24 15:32:04 by rheringe         ###   ########.fr       */
+/*   Updated: 2025/02/25 12:24:49 by rheringe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void	put_ground(t_game *game, int i, int j)
 	mlx_image_to_window(game->mlx, game->image->ground_img,
 		j * TILE_SIZE, i * TILE_SIZE);
 	mlx_image_to_window(game->mlx, game->image->exit_img,
-		j * (TILE_SIZE - 3), i * (TILE_SIZE - 6));
+		j * (TILE_SIZE), i * (TILE_SIZE));
 }
 
 void	set_exit_position(t_game *game, int i, int j)

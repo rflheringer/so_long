@@ -6,7 +6,7 @@
 /*   By: rheringe <rheringe@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 13:38:27 by rheringe          #+#    #+#             */
-/*   Updated: 2025/02/24 17:08:38 by rheringe         ###   ########.fr       */
+/*   Updated: 2025/02/25 12:03:07 by rheringe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ typedef struct s_enemy
 	mlx_texture_t	*e_fr_text[6];
 	mlx_image_t		*e_fr_img[6];
 	int				e_curr_fr;
+	int				enemy;
 	int				e_fr_count;
 	double			e_fr_time;
 	double			e_fr_delay;
